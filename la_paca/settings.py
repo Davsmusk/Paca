@@ -57,12 +57,15 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'la_paca.urls'
 
-
-
 import os
-
-# Construir rutas dentro del proyecto como esta: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
+
 
 # Configuración de Plantillas
 TEMPLATES = [
@@ -160,13 +163,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 # settings.py
-import os
 
 # ... otras configuraciones ...
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Ruta donde se recopilarán los archivos estáticos
+
 
 
 # Default primary key field type
