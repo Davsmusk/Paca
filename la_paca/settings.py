@@ -118,15 +118,9 @@ WSGI_APPLICATION = 'la_paca.wsgi.application'
 #     }
 # }
 
+import dj_database_url
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'mi_base_de_datos_0apd',  # Nombre de la base de datos
-        'USER': 'mi_base_de_datos_0apd_user',  # Usuario de la base de datos
-        'PASSWORD': 'QP4x4InlXIe1LEReuEEpIV77o1NnORuZ',  # Contraseña de la base de datos
-        'HOST': 'dpg-ctb8hpl2ng1s73dqejs0-a',  # Host de la base de datos
-        'PORT': '5432',  # Puerto de la base de datos
-    }
+    'default': dj_database_url.config(default='postgresql://mi_base_de_datos_0apd_user:QP4x4InlXIe1LEReuEEpIV77o1NnORuZ@dpg-ctb8hpl2ng1s73dqejs0-a.oregon-postgres.render.com/mi_base_de_datos_0apd')
 }
 
 
