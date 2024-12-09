@@ -119,9 +119,11 @@ WSGI_APPLICATION = 'la_paca.wsgi.application'
 # }
 
 import dj_database_url
+
 DATABASES = {
-    'default': dj_database_url.config(default='postgres://mi_base_de_datos_0apd_user:QP4x4InlXIe1LEReuEEpIV77o1NnORuZ@dpg-ctb8hpl2ng1s73dqejs0-a/mi_base_de_datos_0apd')
+    'default': dj_database_url.config(default='postgresql://mi_base_de_datos_0apd_user:QP4x4InlXIe1LEReuEEpIV77o1NnORuZ@dpg-ctb8hpl2ng1s73dqejs0-a.oregon-postgres.render.com/mi_base_de_datos_0apd')
 }
+
 
 
 
