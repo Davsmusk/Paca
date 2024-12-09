@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ventas</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Todas las Ventas</h1>
+        <a href="{% url 'registrar_venta' %}" class="btn btn-success">Registrar Venta</a>
+        <ul class="sale-list">
+            {% for venta in ventas %}
+                <li class="sale-item">
+                    <h2>{{ venta.producto.nombre }}</h2>
+                    <p>Cliente: {{ venta.cliente.nombre }}</p>
+                    <p>Cantidad: {{ venta.cantidad }}</p>
+                    <p>Fecha: {{ venta.fecha }}</p>
+                    <a href="{% url 'editar_venta' venta.pk %}" class="btn btn-primary">Editar</a>
+                    <a href="{% url 'eliminar_venta' venta.pk %}" class="btn btn-danger">Eliminar</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

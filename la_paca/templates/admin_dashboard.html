@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/admin_dashboard.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Panel de Administración</h1>
+
+        <!-- Sección de Estadísticas de Ventas -->
+        <div class="stats-section">
+            <h2>Estadísticas de Ventas</h2>
+            <p>Total de ventas realizadas: {{ total_ventas }}</p>
+            <p>Productos vendidos: {{ ventas_totales }}</p>
+        </div>
+
+        <!-- Sección de Inventario Actual -->
+        <div class="inventory-section">
+            <h2>Inventario Actual</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                        <th>Existencia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for producto in productos %}
+                        <tr>
+                            <td>{{ producto.nombre }}</td>
+                            <td>{{ producto.descripcion }}</td>
+                            <td>{{ producto.precio }}</td>
+                            <td>{{ producto.existencia }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Sección de Ventas por Cliente -->
+        <div class="sales-by-customer-section">
+            <h2>Ventas por Cliente</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Total Compras</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cliente in ventas_por_cliente %}
+                        <tr>
+                            <td>{{ cliente.nombre }}</td>
+                            <td>{{ cliente.total_compras }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Sección de Ventas por Producto -->
+        <div class="sales-by-product-section">
+            <h2>Ventas por Producto</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Total Vendido</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for producto in ventas_por_producto %}
+                        <tr>
+                            <td>{{ producto.nombre }}</td>
+                            <td>{{ producto.total_vendido }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Sección de Rendimiento de Empleados -->
+        <div class="employees-section">
+            <h2>Rendimiento de Empleados</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Empleado</th>
+                        <th>Posición</th>
+                        <th>Rendimiento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for empleado in empleados %}
+                        <tr>
+                            <td>{{ empleado.nombre }}</td>
+                            <td>{{ empleado.posicion }}</td>
+                            <td>{{ empleado.fecha_contratacion }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

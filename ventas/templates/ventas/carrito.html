@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Carrito de Compras</h1>
+        {% if items %}
+            <ul>
+                {% for item in items %}
+                    <li>{{ item.producto.nombre }} - Cantidad: {{ item.cantidad }} - Subtotal: ${{ item.subtotal }}</li>
+                {% endfor %}
+            </ul>
+            <p>Total: ${{ total }}</p>
+            <a href="{% url 'index' %}" class="btn btn-secondary">Seguir Comprando</a>
+            <form method="post" action="{% url 'finalizar_compra' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Finalizar Compra</button>
+            </form>
+        {% else %}
+            <p>Tu carrito está vacío.</p>
+            <a href="{% url 'productos' %}" class="btn btn-primary">Ver Productos</a>
+        {% endif %}
+    </div>
+</body>
+</html>

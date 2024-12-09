@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empleados</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Todos los Empleados</h1>
+        <a href="{% url 'agregar_empleado' %}" class="btn btn-success">Agregar Empleado</a>
+        <ul class="employee-list">
+            {% for empleado in empleados %}
+                <li class="employee-item">
+                    <h2>{{ empleado.nombre }}</h2>
+                    <p>Posición: {{ empleado.posicion }}</p>
+                    <p>Rendimiento: {{ empleado.rendimiento }}</p>
+                    <p>Fecha de Contratación: {{ empleado.fecha_contratacion }}</p>
+                    <a href="{% url 'editar_empleado' empleado.pk %}" class="btn btn-primary">Editar</a>
+                    <a href="{% url 'eliminar_empleado' empleado.pk %}" class="btn btn-danger">Eliminar</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
