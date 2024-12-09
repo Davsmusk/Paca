@@ -120,12 +120,12 @@ WSGI_APPLICATION = 'la_paca.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'paca',
-        'USER': 'postgres',
-        'PASSWORD': 'Josedavid1',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'mi_base_de_datos_0apd',  # Nombre de la base de datos
+        'USER': 'mi_base_de_datos_0apd_user',  # Usuario de la base de datos
+        'PASSWORD': 'QP4x4InlXIe1LEReuEEpIV77o1NnORuZ',  # Contraseña de la base de datos
+        'HOST': 'dpg-ctb8hpl2ng1s73dqejs0-a',  # Host de la base de datos
+        'PORT': '5432',  # Puerto de la base de datos
     }
 }
 
