@@ -86,3 +86,27 @@ def finalizar_compra(request):
     # Limpiar el carrito de la sesión
     request.session['carrito'] = {}
     return redirect('admin_dashboard')
+
+
+# la_paca/views.py
+from django.http import JsonResponse, HttpResponseRedirect
+from django.views.decorators.csrf import csrf_exempt
+from django.urls import reverse
+import json
+
+@csrf_exempt
+def recibir_datos_compra(request):
+    if request.method == 'POST':
+        datos_compra = json.loads(request.body)
+        # Aquí puedes procesar los datos y guardarlos en tu dashboard
+        # Por ejemplo, puedes guardar los datos en tu base de datos
+        
+        # Redirigir al usuario a la página de inicio
+        return HttpResponseRedirect(reverse('index'))
+    return JsonResponse({'status': 'error', 'message': 'Método no permitido'}, status=405)
+
+# la_paca/views.py
+from django.shortcuts import render
+
+def compra_confirmacion(request):
+    return render(request, 'compra_confirmacion.html')
