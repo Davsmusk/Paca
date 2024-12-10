@@ -69,11 +69,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Configuración de archivos estáticos
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),  # Usar os.path.join para concatenar las rutas
+    os.path.join(BASE_DIR, 'static'),
 ]
 
 # Configuración para producción
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Usar os.path.join para concatenar las rutas
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 # Configuración de Plantillas
