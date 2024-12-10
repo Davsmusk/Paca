@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Venta, Carrito, CarritoItem
+from .models import Venta,  CarritoItem
 from .forms import VentaForm
 from productos.models import Producto
 
@@ -78,17 +78,45 @@ from .models import Venta, Cliente
 
 @csrf_exempt
 def finalizar_compra(request):
-    if request.method == 'POST':
-        # Obtener el cliente basado en el ID proporcionado
-        cliente_id = request.POST.get('cliente_id')
-        cliente = Cliente.objects.get(id=cliente_id)
-        total = calcular_total(request)  # Supone que tienes una función para calcular el total
-        venta = Venta(cliente=cliente, total=total)
-        venta.save()
+    try:
+        if request.method == 'POST':
+            cliente_id = request.POST.get('cliente_id')
+            cliente = Cliente.objects.get(id=cliente_id)
+            total = calcular_total(request)
+            venta = Venta(cliente=cliente, total=total)
+            venta.save()
 
-        # Redirigir a la página de confirmación de compra
-        return redirect('compra_confirmacion')
-    return redirect('carrito')  # Redirigir de vuelta al carrito si no es una solicitud POST
+            # Redirigir a la página de confirmación de compra
+            return redirect('compra_confirmacion')
+        return redirect('carrito')
+    except Exception as e:
+        # Log the error or print it to the console for debugging
+        print(f"Error en finalizar_compra: {e}")
+        return render(request, 'error.html', {'mensaje': 'Ocurrió un error al procesar la compra. Por favor, intente nuevamente.'})
+    
+@csrf_exempt
+def finalizar_compra(request):
+    try:
+        if request.method == 'POST':
+            print("Método POST recibido")
+            cliente_id = request.POST.get('cliente_id')
+            print(f"Cliente ID: {cliente_id}")
+            cliente = Cliente.objects.get(id=cliente_id)
+            total = calcular_total(request)
+            print(f"Total calculado: {total}")
+            venta = Venta(cliente=cliente, total=total)
+            venta.save()
+            print("Venta guardada correctamente")
+
+            # Redirigir a la página de confirmación de compra
+            return redirect('compra_confirmacion')
+        return redirect('carrito')
+    except Exception as e:
+        # Log the error or print it to the console for debugging
+        print(f"Error en finalizar_compra: {e}")
+        return render(request, 'error.html', {'mensaje': 'Ocurrió un error al procesar la compra. Por favor, intente nuevamente.'})
+
+
 
 # la_paca/views.py
 from django.http import JsonResponse, HttpResponseRedirect
