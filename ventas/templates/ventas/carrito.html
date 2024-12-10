@@ -20,6 +20,7 @@
             <a href="{% url 'index' %}" class="btn btn-secondary">Seguir Comprando</a>
             <form method="post" action="{% url 'finalizar_compra' %}">
                 {% csrf_token %}
+                <input type="hidden" name="cliente_id" value="{{ request.user.cliente.id }}">
                 <button type="submit" class="btn btn-primary">Finalizar Compra</button>
             </form>
         {% else %}
@@ -29,3 +30,4 @@
     </div>
 </body>
 </html>
+

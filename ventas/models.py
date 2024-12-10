@@ -31,3 +31,20 @@ class CarritoItem(models.Model):
     def __str__(self):
         return f"{self.producto.nombre} - {self.cantidad}"
 
+from django.db import models
+
+class Producto(models.Model):
+    nombre = models.CharField(max_length=255)
+    precio = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def __str__(self):
+        return self.nombre
+
+class CarritoItem(models.Model):
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    cantidad = models.IntegerField()
+    subtotal = models.DecimalField(max_digits=10, decimal_places=2)
+
+    def save(self, *args, **kwargs):
+        self.subtotal = self.producto.precio * self.cantidad
+        super().save(*args, **kwargs)

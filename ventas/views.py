@@ -68,20 +68,22 @@ def ver_carrito(request):
 
     return render(request, 'ventas/carrito.html', {'items': items, 'total': total})
 
+from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
+from .models import Venta, Cliente
+
+@csrf_exempt
 def finalizar_compra(request):
-    carrito = request.session.get('carrito', {})
+    if request.method == 'POST':
+        cliente = Cliente.objects.get(id=request.POST['cliente_id'])
+        total = calcular_total(request)  # Suponiendo que tienes una función para calcular el total
+        venta = Venta(cliente=cliente, total=total)
+        venta.save()
+        
+        # Redirigir a la página de confirmación de compra
+        return redirect('compra_confirmacion')
+    return redirect('carrito')  # Redirigir de vuelta al carrito si no es una solicitud POST
 
-    if not request.user.is_authenticated:
-        # Podrías añadir aquí la lógica para manejar usuarios no autenticados
-        return redirect('login')
-
-    for producto_id, cantidad in carrito.items():
-        producto = get_object_or_404(Producto, id=producto_id)
-        Venta.objects.create(
-            producto=producto,
-            cantidad=cantidad,
-            usuario=request.user
-        )
 
     # Limpiar el carrito de la sesión
     request.session['carrito'] = {}
@@ -110,3 +112,10 @@ from django.shortcuts import render
 
 def compra_confirmacion(request):
     return render(request, 'compra_confirmacion.html')
+
+from .models import CarritoItem
+
+def calcular_total(request):
+    carrito_items = CarritoItem.objects.all()  # Ajusta esto para filtrar por usuario o sesión si es necesario
+    total = sum(item.subtotal for item in carrito_items)
+    return total
