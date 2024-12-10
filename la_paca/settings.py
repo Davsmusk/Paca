@@ -59,16 +59,21 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'la_paca.urls'
 
+
 import os
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+from pathlib import Path
 
+# Ruta base del proyecto
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Asegúrate de que estos ajustes estén presentes
+# Configuración de archivos estáticos
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
+    os.path.join(BASE_DIR, 'static'),  # Usar os.path.join para concatenar las rutas
 ]
+
+# Configuración para producción
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Usar os.path.join para concatenar las rutas
 
 
 # Configuración de Plantillas
