@@ -92,6 +92,7 @@ def finalizar_compra(request):
         return render(request, 'error.html', {'mensaje': f'Ocurrió un error al procesar la compra: {e}'})
 
 
+
 # la_paca/views.py
 from django.http import JsonResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt

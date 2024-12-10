@@ -1,6 +1,5 @@
 from django.db import models
 from productos.models import Producto
-from clientes.models import Cliente
 
 from django.db import models
 
@@ -20,6 +19,7 @@ class Venta(models.Model):
 
     def __str__(self):
         return f"{self.cliente} - {self.total}"
+
 
 
 
