@@ -72,23 +72,23 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from .models import Venta, Cliente
 
+from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
+from .models import Venta, Cliente
+
 @csrf_exempt
 def finalizar_compra(request):
     if request.method == 'POST':
-        cliente = Cliente.objects.get(id=request.POST['cliente_id'])
-        total = calcular_total(request)  # Suponiendo que tienes una función para calcular el total
+        # Obtener el cliente basado en el ID proporcionado
+        cliente_id = request.POST.get('cliente_id')
+        cliente = Cliente.objects.get(id=cliente_id)
+        total = calcular_total(request)  # Supone que tienes una función para calcular el total
         venta = Venta(cliente=cliente, total=total)
         venta.save()
-        
+
         # Redirigir a la página de confirmación de compra
         return redirect('compra_confirmacion')
     return redirect('carrito')  # Redirigir de vuelta al carrito si no es una solicitud POST
-
-
-    # Limpiar el carrito de la sesión
-    request.session['carrito'] = {}
-    return redirect('admin_dashboard')
-
 
 # la_paca/views.py
 from django.http import JsonResponse, HttpResponseRedirect

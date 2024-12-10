@@ -3,13 +3,13 @@ from productos.models import Producto
 from clientes.models import Cliente
 
 class Venta(models.Model):
-    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
-    cantidad = models.PositiveIntegerField()
     fecha = models.DateTimeField(auto_now_add=True)
+    total = models.DecimalField(max_digits=10, decimal_places=2)
+    # Otros campos relevantes
 
     def __str__(self):
-        return f"Venta de {self.producto.nombre} a {self.cliente.nombre}"
+        return f"{self.cliente} - {self.total}"
 
 
 
