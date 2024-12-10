@@ -53,7 +53,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # Añadir más middleware personalizado aquí si es necesario
 ]
+
 
 ROOT_URLCONF = 'la_paca.urls'
 

@@ -68,32 +68,38 @@ def ver_carrito(request):
 
     return render(request, 'ventas/carrito.html', {'items': items, 'total': total})
 
-from django.shortcuts import render, redirect
-from django.views.decorators.csrf import csrf_exempt
-from .models import Venta, Cliente
 
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from .models import Venta, Cliente
+import logging
+
+logger = logging.getLogger(__name__)
 
 @csrf_exempt
 def finalizar_compra(request):
     try:
         if request.method == 'POST':
+            logger.debug("Método POST recibido")
             cliente_id = request.POST.get('cliente_id')
+            logger.debug(f"Cliente ID: {cliente_id}")
             cliente = Cliente.objects.get(id=cliente_id)
             total = calcular_total(request)
+            logger.debug(f"Total calculado: {total}")
             venta = Venta(cliente=cliente, total=total)
             venta.save()
+            logger.debug("Venta guardada correctamente")
 
             # Redirigir a la página de confirmación de compra
             return redirect('compra_confirmacion')
         return redirect('carrito')
+    except Cliente.DoesNotExist:
+        logger.error("Cliente no encontrado.")
+        return render(request, 'error.html', {'mensaje': 'Cliente no encontrado. Por favor, verifique su ID de cliente.'})
     except Exception as e:
-        # Log the error or print it to the console for debugging
-        print(f"Error en finalizar_compra: {e}")
+        logger.error(f"Error en finalizar_compra: {e}")
         return render(request, 'error.html', {'mensaje': 'Ocurrió un error al procesar la compra. Por favor, intente nuevamente.'})
-    
+
 @csrf_exempt
 def finalizar_compra(request):
     try:
