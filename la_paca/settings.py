@@ -20,7 +20,8 @@ SECRET_KEY = 'django-insecure-#-3b&y&7v9i4n+lvtzhl(-nal4x*n79j#p288weode$u*3l$oq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['fubuking.onrender.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'fubuking.onrender.com']
+
 
 
 

@@ -1,32 +1,19 @@
 from django.db import models
+from clientes.models import Cliente
 from productos.models import Producto
+from django.contrib.auth.models import User
 
-from django.db import models
 
-class Cliente(models.Model):
-    nombre = models.CharField(max_length=255)
-    email = models.EmailField(unique=True)
-    # Otros campos relevantes
-
-    def __str__(self):
-        return self.nombre
 
 class Venta(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    cantidad = models.IntegerField()
     fecha = models.DateTimeField(auto_now_add=True)
-    total = models.DecimalField(max_digits=10, decimal_places=2)
-    # Otros campos relevantes
+    total = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)  # Añadir valor por defecto para total
 
     def __str__(self):
-        return f"{self.cliente} - {self.total}"
-
-
-
-
-
-from django.db import models
-from django.contrib.auth.models import User
-from productos.models import Producto
+        return f"{self.cliente} - {self.producto} - {self.cantidad}"
 
 class Carrito(models.Model):
     usuario = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -43,18 +30,12 @@ class CarritoItem(models.Model):
         return f"{self.producto.nombre} - {self.cantidad}"
 
 from django.db import models
-
-class Producto(models.Model):
-    nombre = models.CharField(max_length=255)
-    precio = models.DecimalField(max_digits=10, decimal_places=2)
-
-    def __str__(self):
-        return self.nombre
+from productos.models import Producto
 
 class CarritoItem(models.Model):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     cantidad = models.IntegerField()
-    subtotal = models.DecimalField(max_digits=10, decimal_places=2)
+    subtotal = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)  # Añadir valor por defecto para subtotal
 
     def save(self, *args, **kwargs):
         self.subtotal = self.producto.precio * self.cantidad

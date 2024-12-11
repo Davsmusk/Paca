@@ -122,3 +122,23 @@ def calcular_total(request):
     carrito_items = CarritoItem.objects.all()  # Ajusta esto para filtrar por usuario o sesión si es necesario
     total = sum(item.subtotal for item in carrito_items)
     return total
+
+from clientes.models import Cliente
+from .models import Venta
+
+# Resto del código de la vista
+from django.shortcuts import render, redirect
+from .models import Venta, Producto, Cliente
+
+def crear_venta(request):
+    if request.method == 'POST':
+        cliente_id = request.POST.get('cliente_id')
+        producto_id = request.POST.get('producto_id')
+        cantidad = request.POST.get('cantidad')
+        cliente = Cliente.objects.get(id=cliente_id)
+        producto = Producto.objects.get(id=producto_id)
+        total = producto.precio * int(cantidad)
+        venta = Venta(cliente=cliente, producto=producto, cantidad=cantidad, total=total)
+        venta.save()
+        return redirect('ventas')
+    return render(request, 'crear_venta.html')
