@@ -56,11 +56,10 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'la_paca.urls'
 
 
-import os
-from pathlib import Path
+
 import dj_database_url
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 DATABASES = {
     'default': dj_database_url.config(
@@ -68,13 +67,18 @@ DATABASES = {
     )
 }
 
-# Configuración de archivos estáticos
+import os
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'static'),  # Directorio global de archivos estáticos
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # Configuración de Plantillas
