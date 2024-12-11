@@ -52,22 +52,32 @@ def agregar_al_carrito(request, producto_id):
     request.session['carrito'] = carrito
     return redirect('ver_carrito')
 
+from django.shortcuts import render, redirect
+from .models import CarritoItem
+
+from django.shortcuts import render, redirect
+from .models import CarritoItem
+
 def ver_carrito(request):
-    carrito = request.session.get('carrito', {})
-    items = []
-    total = 0
+    carrito_items = CarritoItem.objects.all()
+    subtotal = sum(item.cantidad * item.producto.precio for item in carrito_items)
+    total = subtotal  # Puedes agregar más cálculos como impuestos aquí
 
-    for producto_id, cantidad in carrito.items():
-        producto = get_object_or_404(Producto, id=producto_id)
-        items.append({
-            'producto': producto,
-            'cantidad': cantidad,
-            'subtotal': producto.precio * cantidad
-        })
-        total += producto.precio * cantidad
+    context = {
+        'carrito_items': carrito_items,
+        'subtotal': subtotal,
+        'total': total,
+    }
 
-    return render(request, 'ventas/carrito.html', {'items': items, 'total': total})
+    if request.method == 'POST':
+        if 'volver_a_comprar' in request.POST:
+            # Lógica para volver a comprar
+            return redirect('productos')
+        elif 'finalizar_compra' in request.POST:
+            # Lógica para confirmar compra
+            return redirect('compra_confirmacion')
 
+    return render(request, 'ventas/carrito.html', context)
 
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
@@ -111,10 +121,10 @@ def recibir_datos_compra(request):
     return JsonResponse({'status': 'error', 'message': 'Método no permitido'}, status=405)
 
 # la_paca/views.py
-from django.shortcuts import render
-
 def compra_confirmacion(request):
-    return render(request, 'compra_confirmacion.html')
+    # Lógica para confirmar la compra, por ejemplo, vaciar el carrito, procesar el pago, etc.
+    CarritoItem.objects.all().delete()
+    return render(request, 'ventas/compra_confirmacion.html')
 
 from .models import CarritoItem
 

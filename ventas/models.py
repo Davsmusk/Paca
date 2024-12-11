@@ -21,13 +21,15 @@ class Carrito(models.Model):
     def __str__(self):
         return f"Carrito de {self.usuario.username}"
 
-class CarritoItem(models.Model):
-    carrito = models.ForeignKey(Carrito, on_delete=models.CASCADE)
-    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
-    cantidad = models.PositiveIntegerField(default=1)
 
+
+class CarritoItem(models.Model):
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    cantidad = models.IntegerField(default=1)
+    
     def __str__(self):
-        return f"{self.producto.nombre} - {self.cantidad}"
+        return f'{self.cantidad} x {self.producto.nombre}'
+
 
 from django.db import models
 from productos.models import Producto

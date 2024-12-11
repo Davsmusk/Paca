@@ -2,52 +2,38 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Compra Completada</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compra Confirmada</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.1em;
+            color: #666;
+        }
+    </style>
 </head>
 <body>
-    <div id="mensaje" style="display:none;">
-        <h1>¡Felicidades por su compra!</h1>
-        <p>Gracias por comprar con nosotros. Sus datos han sido enviados al dashboard.</p>
-        <a href="{% url 'index' %}" class="btn btn-primary">Volver al Inicio</a>
-
+    <div class="container">
+        <h1>Gracias por tu compra</h1>
+        <p>Tu pedido ha sido procesado con éxito.</p>
     </div>
-
-    <script>
-        // Función para mostrar el mensaje de felicitación
-        function mostrarMensaje() {
-            document.getElementById('mensaje').style.display = 'block';
-        }
-
-        // Función para enviar datos de compra al backend
-        function enviarDatosCompra(datos) {
-            fetch('{% url "recibir_datos_compra" %}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token }}'
-                },
-                body: JSON.stringify(datos)
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
-
-        // Simula el evento de finalizar la compra
-        window.onload = function() {
-            mostrarMensaje();
-            // Simula datos de compra
-            const datosCompra = {
-                producto: 'Nombre del Producto',
-                precio: 100,
-                cantidad: 1
-            };
-            enviarDatosCompra(datosCompra);
-        };
-    </script>
 </body>
 </html>
